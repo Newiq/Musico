@@ -1,9 +1,10 @@
-import Image from "next/image";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Home Page</h1>
+    <div className="min-h-screen bg-beige-100">
+      <main className="container mx-auto p-4">
+        {/* Main content goes here */}
+      </main>
     </div>
   );
 }
