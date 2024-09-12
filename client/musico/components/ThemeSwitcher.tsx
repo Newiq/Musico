@@ -1,18 +1,20 @@
-"use client"
-import React, { useState } from 'react';
+// 'use client'
+// import { SetStateAction, useState } from 'react';
 
-const ThemeSwitcher = () => {
-const [theme, setTheme] = useState('theme1'); 
-const toggleTheme = () => {
-setTheme(theme === 'theme1' ? 'theme2': 'theme1');
-};
+// const ThemeSwitcher = ({ initialTheme = 'lemonade' }) => {
+// const [theme, setTheme] = useState(initialTheme);
 
-return (
-<div className={`bg-themes-${theme}-background text-themes-${theme}-text`}>
-    <h1>Hello, switch the theme!</h1>
-    <button onClick={toggleTheme}>Switch Theme</button>
-</div>
-);
-};
+// const handleThemeChange = (newTheme: SetStateAction<string>) => {
+//     setTheme(newTheme);
+// };
 
-export default ThemeSwitcher;
+// return (
+// <select onChange={(e) => handleThemeChange(e.target.value)} value={theme}>
+//     <option value="lemonade">Lemonade</option>
+//     <option value="emerald">Emerald</option>
+//     <option value="cupcake">Cupcake</option>
+// </select>
+// );
+// };
+
+// export default ThemeSwitcher;
