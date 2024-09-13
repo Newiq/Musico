@@ -1,39 +1,51 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
+import { fetchSheetsList } from '../utils/api';
+pdfjs.GlobalWorkerOptions.workerSrc = "//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js";
 
 export default function SheetLibrary() {
-const [files, setFiles] = useState<File[]>([]); 
+    interface Sheet {
+        id: number;
+        name: string;
+        description: string;
+        file_path: string;
+    }
 
-const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-const file = event.target.files && event.target.files[0]; 
-if (file) {
-    setFiles([...files, file]);
-}
-};
+    const [sheets, setSheets] = useState<Sheet[]>([]);
 
-return (
-<div>
-    <h1>Sheets Library</h1>
-    {files.length > 0 ? (
-    <ul>
-        {files.map((file, index) => (
-        <li key={index}>{file.name}</li> 
-        ))}
-    </ul>
-    ) : (
-    <p>It's empty here... fill it with your musical inspiration!💐</p>
-    )}
-    <div>
-    <label htmlFor="file-upload" className="btn">
-        Upload
-    </label>
-    <input
-        id="file-upload"
-        type="file"
-        style={{ display: 'none' }}
-        onChange={handleFileUpload}
-    />
-    </div>
-</div>
-);
+    useEffect(() => {
+        const fetchSheets = async () => {
+            try {
+                const response = await fetchSheetsList(); 
+                setSheets(response.data);
+            } catch (error) {
+                console.error('Failed to fetch sheets', error);
+            }
+        };
+        fetchSheets();
+    }, []);
+
+    return (
+        <div>
+            <h1>Sheets Library</h1>
+            {sheets.length > 0 ? (
+                <div className="grid grid-cols-3 gap-4">
+                    {sheets.map((sheet) => (
+                        <div key={sheet.id} className="w-32 h-48 overflow-hidden border border-gray-300 m-2">
+                            <Document
+                                file={sheet.file_path}
+                                onLoadSuccess={({ numPages }) => console.log('Document loaded with ', numPages, ' pages')}
+                            >
+                                <Page pageNumber={1} width={150} />
+                            </Document>
+                            <div>{sheet.name}</div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p>It's empty here... fill it with your musical inspiration!💐</p>
+            )}
+        </div>
+    );
 }
