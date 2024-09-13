@@ -19,9 +19,9 @@ return (
         <details className="dropdown dropdown-end">
             <summary className="btn m-1">Choose Theme</summary>
             <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a onClick={() => changeTheme('lemonade')}>Lemonade</a></li>
-                <li><a onClick={() => changeTheme('emerald')}>Emerald</a></li>
-                <li><a onClick={() => changeTheme('cupcake')}>Cupcake</a></li>
+                <li><a onClick={() => changeTheme('lemonade')}>🍋Lemonade</a></li>
+                <li><a onClick={() => changeTheme('emerald')}>🥤Milkshake</a></li>
+                <li><a onClick={() => changeTheme('cupcake')}>🍰Cupcake</a></li>
             </ul>
         </details>
 
