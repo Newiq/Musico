@@ -15,6 +15,16 @@ router.get('/', async (req, res) => {
     res.json(sheets);
 });
 
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    const sheet = await db('sheets').where('id', id).first();
+    if (sheet) {
+        res.json(sheet);
+    } else {
+        res.status(404).send('Sheet not found');
+    }
+});
+
 router.post('/', async (req, res) => {
     const newSheet = await db('sheets').insert(req.body).returning('*');
     res.status(201).json(newSheet);
