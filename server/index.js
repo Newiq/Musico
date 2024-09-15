@@ -65,15 +65,21 @@ mongoose.connect(mongoUrl, {
 	const upload = multer({ storage: storage });
 
 	app.post("/upload-files", upload.single("file"), async (req, res) => {
-	console.log(req.file);
-	const title = req.body.title;
-	const fileName = req.file.filename;
-	try {
-		await PdfSchema.create({ title: title, pdf: fileName });
-		res.send({ status: "ok" });
-	} catch (error) {
-		res.json({ status: error });
-	}
+		if (!req.file) {
+			return res.status(400).json({ status: "error", message: "No file uploaded" });
+		}
+	
+		const title = req.body.title;
+		const fileName = req.file.filename;
+		
+		console.log('Uploading file:', req.file); 
+	
+		try {
+			await PdfSchema.create({ title: title, pdf: fileName });
+			res.json({ status: "ok" });
+		} catch (error) {
+			res.status(500).json({ status: "error", message: error.message });
+		}
 	});
 
 	app.get("/get-files", async (req, res) => {
@@ -84,6 +90,21 @@ mongoose.connect(mongoUrl, {
 		res.status(500).json({ status: "error", message: error.message });
 	}
 	});
+
+	
+	app.get("/get-files/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+		const sheet = await PdfSchema.findById(id);
+		if (!sheet) {
+			return res.status(404).json({ status: "error", message: "Sheet not found" });
+		}
+		res.json({ status: "ok", data: sheet });
+	} catch (error) {
+		res.status(500).json({ status: "error", message: error.message });
+	}
+});
+
 	//apis
 	app.get("/", async (req, res) => {
 	res.send("Upload Success!");

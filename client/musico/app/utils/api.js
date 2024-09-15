@@ -27,18 +27,18 @@ const api = axios.create({
 });
 
 export const fetchSheetsList = () => {
-  return api.get(`/get-files`); 
+  return api.get(`${API_URL}/get-files`); 
 };
 
 
 export const fetchSheetById = (id) => {
-  return api.get(`/files/${id}`); 
+  return api.get(`${API_URL}/get-files/${id}`); 
 };
 
 
 export const uploadSheet = (formData) => {
 
-  return api.post(`/upload-files`, formData, {
+  return api.post(`${API_URL}/upload-files`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data', 
     },

@@ -1,7 +1,6 @@
 // interfaces/Sheet.ts
 export interface Sheet {
-    id: number;
+    _id: string;  
     title: string;
-    description: string;
-    file_path: string;
+    pdf: string; 
 }
