@@ -19,17 +19,29 @@ return (
     onSubmit={handleSearch}
     className="w-full max-w-lg mb-8 flex justify-center space-x-4"
     >
-    <input
-        type="text"
+    <div className="join">
+    <div>
+        <div>
+        <input
         placeholder="Enter music term (e.g., Cmaj7, minor scale)"
         value={term}
         onChange={(e) => setTerm(e.target.value)}
-        className="input input-bordered input-success w-full max-w-xs"
+        className="input input-bordered join-item input-success w-full max-w-xl"
         required
-    />
-    <button className="btn btn-primary" type="submit">
-        Search
-    </button>
+        />
+        </div>
+    </div>
+    <select className="select select-bordered join-item">
+        <option disabled selected>Filter</option>
+        <option>Sci-fi</option>
+        <option>Drama</option>
+        <option>Action</option>
+    </select>
+    <div className="indicator">
+        <span className="indicator-item badge badge-secondary">new</span>
+        <button className="btn join-item" type="submit">Search</button>
+    </div>
+    </div>
     </form>
 
     {result && (

@@ -60,7 +60,7 @@ export default function SheetLibrary() {
     };
 
     return (
-        <div>
+        <div className='min-h-screen'>
             <h1>Sheets Library</h1>
 
             <form onSubmit={handleUpload} style={{ marginBottom: '20px' }}>
@@ -75,8 +75,7 @@ export default function SheetLibrary() {
                         style={{ marginLeft: '10px' }}
                     />
                 </label>
-                <br />
-                <label>
+                {/* <label>
                     Upload PDF:
                     <input
                         type="file"
@@ -85,8 +84,16 @@ export default function SheetLibrary() {
                         required
                         style={{ marginLeft: '10px' }}
                     />
-                </label>
-                <br />
+                </label> */}
+                <label className="form-control w-full max-w-xs">
+                    <input 
+                    type="file" 
+                    accept="application/pdf"
+                    className="file-input file-input-bordered w-full max-w-xs" 
+                    onChange={handleFileChange}
+                    required
+                    />
+                    </label>
                 <button type="submit" style={{ marginTop: '10px' }}>Upload Sheet</button>
             </form>
             
@@ -117,6 +124,18 @@ export default function SheetLibrary() {
                     <p>It's empty here... fill it with your musical inspiration!💐</p>
                 )
             )}
+            <div className="join">
+                <input
+                    className="join-item btn btn-square"
+                    type="radio"
+                    name="options"
+                    aria-label="1"
+                    defaultChecked />
+                <input className="join-item btn btn-square" type="radio" name="options" aria-label="2" />
+                <input className="join-item btn btn-square" type="radio" name="options" aria-label="3" />
+                <input className="join-item btn btn-square" type="radio" name="options" aria-label="4" />
+                </div>
         </div>
+        
     );
 }
