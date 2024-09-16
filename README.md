@@ -35,6 +35,7 @@ Musicians face significant challenges in managing and annotating their sheet mus
     - react
     - react-router
     - axios
+    - pdfjs-dist
     - fabric.js
 - Server libraries:
     - knex

@@ -1,10 +1,10 @@
-
+'use client'
+import { useTheme } from '../app/ThemeContext';
 export default function Home() {
+  const { theme } = useTheme(); 
   return (
-    <div className="min-h-screen bg-beige-100">
-      <main className="container mx-auto p-4">
-        {/* Main content goes here */}
-      </main>
+    <div className="min-h-screen" data-theme={theme}>
+
     </div>
   );
 }
