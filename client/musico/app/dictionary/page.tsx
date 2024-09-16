@@ -26,12 +26,12 @@ return (
         placeholder="Enter music term (e.g., Cmaj7, minor scale)"
         value={term}
         onChange={(e) => setTerm(e.target.value)}
-        className="input input-bordered join-item input-success w-full max-w-xl"
+        className="input input-bordered join-item input-secondary w-full max-w-xl"
         required
         />
         </div>
     </div>
-    <select className="select select-bordered join-item">
+    <select className="select select-bordered select-secondary join-item">
         <option disabled selected>Filter</option>
         <option>Sci-fi</option>
         <option>Drama</option>
@@ -39,7 +39,7 @@ return (
     </select>
     <div className="indicator">
         <span className="indicator-item badge badge-secondary">new</span>
-        <button className="btn join-item" type="submit">Search</button>
+        <button className="btn btn-primary join-item" type="submit">Search</button>
     </div>
     </div>
     </form>
