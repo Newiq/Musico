@@ -1,3 +1,4 @@
+import Link from 'next/link';
 export default function ToolPage() {
     return (
     <div className="min-h-screen">
@@ -11,10 +12,12 @@ export default function ToolPage() {
             alt="Album" />
         </figure>
         <div className="card-body">
-            <h2 className="card-title">New album is released!</h2>
+            <h2 className="card-title">Metronome</h2>
             <p>Click the button to listen on Spotiwhy app.</p>
             <div className="card-actions justify-end">
-            <button className="btn btn-primary">Listen</button>
+            <Link className="btn btn-primary" href="./tools/metronome">
+                    Try it!
+            </Link>
             </div>
         </div>
         </div>
@@ -26,10 +29,12 @@ export default function ToolPage() {
                 alt="Album" />
             </figure>
             <div className="card-body">
-                <h2 className="card-title">New album is released!</h2>
+                <h2 className="card-title">Tuner</h2>
                 <p>Click the button to listen on Spotiwhy app.</p>
                 <div className="card-actions justify-end">
-                <button className="btn btn-primary">Listen</button>
+                <Link className="btn btn-primary" href="./tools/tuner">
+                    Try it!
+                </Link>
                 </div>
             </div>
             </div>

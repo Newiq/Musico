@@ -62,7 +62,6 @@ export default function SheetLibrary() {
     return (
         <div className='min-h-screen'>
             <h1>Sheets Library</h1>
-            {/* You can open the modal using document.getElementById('ID').showModal() method */}
             <button className="btn" onClick={()=>document.getElementById('my_modal_3').showModal()}>+</button>
             <dialog id="my_modal_3" className="modal">
             <div className="modal-box">
