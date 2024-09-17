@@ -62,8 +62,11 @@ export default function SheetLibrary() {
     return (
         <div className='min-h-screen'>
             <h1>Sheets Library</h1>
-
-            <form onSubmit={handleUpload} style={{ marginBottom: '20px' }}>
+            {/* You can open the modal using document.getElementById('ID').showModal() method */}
+            <button className="btn" onClick={()=>document.getElementById('my_modal_3').showModal()}>+</button>
+            <dialog id="my_modal_3" className="modal">
+            <div className="modal-box">
+                <form method="dialog" onSubmit={handleUpload}>
                 <label>
                     Title:
                     <input
@@ -73,30 +76,28 @@ export default function SheetLibrary() {
                         placeholder="Enter sheet title"
                         required
                         style={{ marginLeft: '10px' }}
+                        className="input input-bordered input-secondary w-full max-w-xs"
                     />
                 </label>
-                {/* <label>
-                    Upload PDF:
-                    <input
-                        type="file"
-                        accept="application/pdf"
-                        onChange={handleFileChange}
-                        required
-                        style={{ marginLeft: '10px' }}
-                    />
-                </label> */}
                 <label className="form-control w-full max-w-xs">
                     <input 
                     type="file" 
                     accept="application/pdf"
-                    className="file-input file-input-bordered w-full max-w-xs" 
+                    className="file-input file-input-bordered w-full max-w-xs m-auto" 
                     onChange={handleFileChange}
                     required
                     />
                     </label>
-                <button type="submit" style={{ marginTop: '10px' }}>Upload Sheet</button>
-            </form>
-            
+                    <div className="divider">🎧</div>
+                <button type="submit" className='btn btn-primary m-auto'>Upload Sheet</button>
+                <button type="button" 
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" 
+                onClick={() => document.getElementById('my_modal_3').close()
+
+                }>✕</button>
+                </form>
+            </div>
+            </dialog>
             {loading ? (
                 <p>Loading sheets...</p>
             ) : (

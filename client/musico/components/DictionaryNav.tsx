@@ -6,6 +6,7 @@ function DictionaryNav({ onTermClick }) {
   
     return (
       <ul className="menu bg-base-200 rounded-box w-56 mt-10 mb-20">
+        {/* Chords */}
         <li>
           <details>
             <summary>Chords</summary>
@@ -30,26 +31,50 @@ function DictionaryNav({ onTermClick }) {
           </details>
         </li>
   
+        {/* Scales */}
         <li>
           <details>
             <summary>Scales</summary>
             <ul>
               {scales.map((scale, index) => (
                 <li key={index}>
-                  <a href="#" onClick={() => onTermClick(scale)}>{scale}</a>
+                  <details>
+                    <summary>{scale}</summary>
+                    <ul>
+                      {notes.map((note) => (
+                        <li key={note}>
+                          <a href="#" onClick={() => onTermClick(`${note} ${scale} scale`)}>
+                            {`${note} ${scale} scale`}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
                 </li>
               ))}
             </ul>
           </details>
         </li>
   
+        {/* Intervals */}
         <li>
           <details>
             <summary>Intervals</summary>
             <ul>
               {intervals.map((interval, index) => (
                 <li key={index}>
-                  <a href="#" onClick={() => onTermClick(interval)}>{interval}</a>
+                  <details>
+                    <summary>{interval}</summary>
+                    <ul>
+                      {notes.map((note) => (
+                        <li key={note}>
+                          <a href="#" onClick={() => onTermClick(`${note} ${interval}`)}>
+                            {`${note} ${interval}`}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
                 </li>
               ))}
             </ul>
