@@ -1,32 +1,38 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 function Metronome() {
   const [bpm, setBpm] = useState(70);
   const [isPlaying, setIsPlaying] = useState(false);
   const [intervalId, setIntervalId] = useState<number | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const oscRef = useRef<OscillatorNode | null>(null);
+  const gainNodeRef = useRef<GainNode | null>(null);
 
-  const playClick = () => {
+  const playTone = (frequency: number) => {
     if (!audioContextRef.current) {
       audioContextRef.current = new (window.AudioContext)();
     }
 
-    const osc = audioContextRef.current.createOscillator();
-    const gainNode = audioContextRef.current.createGain();
+    if (oscRef.current) {
+      oscRef.current.stop();
+    }
 
-    osc.connect(gainNode);
-    gainNode.connect(audioContextRef.current.destination);
-    
-    osc.frequency.value = 1000;
-    osc.type = 'square';
+    oscRef.current = audioContextRef.current.createOscillator();
+    gainNodeRef.current = audioContextRef.current.createGain();
 
-    gainNode.gain.setValueAtTime(1, audioContextRef.current.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContextRef.current.currentTime + 0.1);
+    oscRef.current.frequency.value = frequency;
+    oscRef.current.type = 'sine';
 
-    osc.start(audioContextRef.current.currentTime);
-    osc.stop(audioContextRef.current.currentTime + 0.1);
+    gainNodeRef.current.gain.setValueAtTime(0.8, audioContextRef.current.currentTime);
+    gainNodeRef.current.gain.exponentialRampToValueAtTime(0.001, audioContextRef.current.currentTime + 0.2);
+
+    oscRef.current.connect(gainNodeRef.current);
+    gainNodeRef.current.connect(audioContextRef.current.destination);
+
+    oscRef.current.start(audioContextRef.current.currentTime);
+    oscRef.current.stop(audioContextRef.current.currentTime + 0.2); 
   };
 
   const togglePlay = () => {
@@ -41,7 +47,7 @@ function Metronome() {
   const startMetronome = () => {
     const interval = 60000 / bpm;
     const id = window.setInterval(() => {
-      playClick();
+      playTone(440);
     }, interval);
     setIntervalId(id);
   };
@@ -50,6 +56,9 @@ function Metronome() {
     if (intervalId) {
       clearInterval(intervalId);
       setIntervalId(null);
+    }
+    if (oscRef.current) {
+      oscRef.current.stop();
     }
   };
 
