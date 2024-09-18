@@ -45,3 +45,7 @@ export const uploadSheet = (formData) => {
   });
 };
 
+export const deleteSheet = (id) =>{
+  return api.delete(`${API_URL}/delete-file/${id}`);
+}
+
