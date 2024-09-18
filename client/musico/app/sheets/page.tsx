@@ -107,7 +107,7 @@ export default function SheetLibrary() {
                                     <div>
                                         <ImagePreview pdf={`${process.env.NEXT_PUBLIC_API_URL}/files/${sheet.pdf}`} containerWidth={200} containerHeight={250} />
                                         <div className="text-center mt-2 text-sm">
-                                            <p>{sheet.title}</p>
+                                            <p className='text-center mb-2'>{sheet.title}</p>
                                         </div>
                                     </div>
                                 </Link>

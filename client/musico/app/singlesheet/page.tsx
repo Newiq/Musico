@@ -44,7 +44,7 @@ return (
 <div>
     <h1>{sheet.title}</h1>
     <div className='flex'>
-        <ToolsNav />
+        <ToolsNav sheetId={sheet._id} />
         <PdfComp pdfFile={pdfFilePath} />
     </div>
     
