@@ -1,7 +1,8 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import { fetchSheetsList, uploadSheet } from '../utils/api';
 import Link from 'next/link';
+import ImagePreview from '../../components/ImagePreview';
 
 export default function SheetLibrary() {
     interface Sheet {
@@ -19,7 +20,6 @@ export default function SheetLibrary() {
         const fetchSheets = async () => {
             try {
                 const response = await fetchSheetsList();
-                console.log("Fetched sheets:", response.data.data); 
                 setSheets(response.data.data); 
                 setLoading(false);
             } catch (error) {
@@ -48,7 +48,6 @@ export default function SheetLibrary() {
 
             try {
                 const response = await uploadSheet(formData);
-                console.log('File uploaded successfully:', response.data);
                 const updatedResponse = await fetchSheetsList();
                 setSheets(updatedResponse.data.data); 
             } catch (error) {
@@ -60,9 +59,9 @@ export default function SheetLibrary() {
     };
 
     return (
-        <div className='min-h-screen'>
-            <h1>Sheets Library</h1>
-            <button className="btn" onClick={()=>document.getElementById('my_modal_3').showModal()}>+</button>
+        <div className='min-h-screen p-4'>
+            <h1 className="text-3xl font-bold mb-4">Sheets Library</h1>
+            <button className="btn" onClick={() => document.getElementById('my_modal_3')?.showModal()}>+</button>
             <dialog id="my_modal_3" className="modal">
             <div className="modal-box">
                 <form method="dialog" onSubmit={handleUpload}>
@@ -74,7 +73,6 @@ export default function SheetLibrary() {
                         onChange={handleTitleChange}
                         placeholder="Enter sheet title"
                         required
-                        style={{ marginLeft: '10px' }}
                         className="input input-bordered input-secondary w-full max-w-xs"
                     />
                 </label>
@@ -86,37 +84,33 @@ export default function SheetLibrary() {
                     onChange={handleFileChange}
                     required
                     />
-                    </label>
-                    <div className="divider">🎧</div>
+                </label>
+                <div className="divider">🎧</div>
                 <button type="submit" className='btn btn-primary m-auto'>Upload Sheet</button>
                 <button type="button" 
                 className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" 
-                onClick={() => document.getElementById('my_modal_3').close()
+                onClick={() => document.getElementById('my_modal_3')?.close()
 
                 }>✕</button>
                 </form>
             </div>
             </dialog>
+
             {loading ? (
                 <p>Loading sheets...</p>
             ) : (
                 sheets.length > 0 ? (
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {sheets.map((sheet) => (
-                            <div key={sheet._id} className="w-32 h-48 overflow-hidden border border-gray-300 m-2">
+                            <div key={sheet._id} className="w-full h-auto border border-gray-300 p-2 rounded-md shadow-lg">
                                 <Link href={`/singlesheet?id=${sheet._id}`}>
-                                    <div style={{
-                                        backgroundColor: '#ccc',
-                                        width: '100%',
-                                        height: '100%',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}>
-                                        <p>Sheet {sheet.title}</p>
+                                    <div>
+                                        <ImagePreview pdf={`${process.env.NEXT_PUBLIC_API_URL}/files/${sheet.pdf}`} containerWidth={200} containerHeight={250} />
+                                        <div className="text-center mt-2 text-sm">
+                                            <p>{sheet.title}</p>
+                                        </div>
                                     </div>
                                 </Link>
-                                
                             </div>
                         ))}
                     </div>
@@ -124,18 +118,6 @@ export default function SheetLibrary() {
                     <p>It's empty here... fill it with your musical inspiration!💐</p>
                 )
             )}
-            <div className="join">
-                <input
-                    className="join-item btn btn-square"
-                    type="radio"
-                    name="options"
-                    aria-label="1"
-                    defaultChecked />
-                <input className="join-item btn btn-square" type="radio" name="options" aria-label="2" />
-                <input className="join-item btn btn-square" type="radio" name="options" aria-label="3" />
-                <input className="join-item btn btn-square" type="radio" name="options" aria-label="4" />
-                </div>
         </div>
-        
     );
 }
