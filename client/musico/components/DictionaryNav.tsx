@@ -17,7 +17,7 @@ function DictionaryNav({ onTermClick }: { onTermClick: (description: string) => 
                   <ul>
                     {notes.map((note) => (
                       <li key={note}>
-                        <a href="#" onClick={() => onTermClick(`${note}${chordType}`)} className="max-w-full">
+                        <a href="#" onClick={() => onTermClick(`${note}${chordType}`)} >
                           {`${note}${chordType}`}
                         </a>
                       </li>

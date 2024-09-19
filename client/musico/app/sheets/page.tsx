@@ -61,40 +61,53 @@ export default function SheetLibrary() {
     return (
         <div className='min-h-screen p-4'>
             <h1 className="text-3xl font-bold mb-4">Sheets Library</h1>
-            <button className="btn" onClick={() => document.getElementById('my_modal_3')?.showModal()}>+</button>
+            <button className="btn mb-2" onClick={() => document.getElementById('my_modal_3')?.showModal()}>+</button>
             <dialog id="my_modal_3" className="modal">
-            <div className="modal-box">
-                <form method="dialog" onSubmit={handleUpload}>
-                <label>
-                    Title:
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={handleTitleChange}
-                        placeholder="Enter sheet title"
-                        required
-                        className="input input-bordered input-secondary w-full max-w-xs"
-                    />
-                </label>
-                <label className="form-control w-full max-w-xs">
-                    <input 
-                    type="file" 
-                    accept="application/pdf"
-                    className="file-input file-input-bordered w-full max-w-xs m-auto" 
-                    onChange={handleFileChange}
-                    required
-                    />
-                </label>
-                <div className="divider">🎧</div>
-                <button type="submit" className='btn btn-primary m-auto'>Upload Sheet</button>
-                <button type="button" 
-                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" 
-                onClick={() => document.getElementById('my_modal_3')?.close()
+    <div className="modal-box relative">
+        <form method="dialog" onSubmit={handleUpload}>
+        <button 
+            type="button" 
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" 
+            onClick={() => document.getElementById('my_modal_3')?.close()}
+        >✕</button>
 
-                }>✕</button>
-                </form>
-            </div>
-            </dialog>
+        <h2 className="text-lg font-bold text-center mb-4">Upload Sheets</h2>
+
+        <div className="form-control w-full mb-4">
+            <label className="label">
+            <span className="label-text">Title:</span>
+            </label>
+            <input
+            type="text"
+            value={title}
+            onChange={handleTitleChange}
+            placeholder="Enter sheet title"
+            required
+            className="input input-bordered w-full"
+            />
+        </div>
+
+        <div className="form-control w-full mb-4">
+            <label className="label">
+            <span className="label-text">Upload file:</span>
+            </label>
+            <input 
+            type="file" 
+            accept="application/pdf"
+            className="file-input file-input-bordered w-full"
+            onChange={handleFileChange}
+            required
+            />
+        </div>
+
+        <div className="divider">🎧</div>
+
+        <div className="flex justify-center">
+            <button type="submit" className="btn btn-primary w-full">Upload Sheet</button>
+        </div>
+        </form>
+    </div>
+    </dialog>
 
             {loading ? (
                 <p>Loading sheets...</p>
