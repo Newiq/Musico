@@ -51,7 +51,7 @@ export default function Home() {
           {result && (
             <div className="card shadow-lg bg-base-200 w-full max-w-lg p-6">
               <h2 className="card-title text-lg mb-4">Result for: {term}</h2>
-              <pre className="text-sm bg-base-300 p-4 rounded-lg">
+              <pre className="text-sm bg-base-300 p-4 rounded-lg w-full text-wrap">
                 {JSON.stringify(result, null, 2)}
               </pre>
             </div>
