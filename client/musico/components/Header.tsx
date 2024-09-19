@@ -6,9 +6,9 @@
     const { theme, changeTheme } = useTheme();
 
     return (
-        <header className={`p-4`} data-theme={theme}>
+        <header className={"p-4 mt-2"} data-theme={theme}>
         <div className="container mx-auto flex justify-between items-center">
-            <h1 className="text-2xl font-bold">Musico</h1>
+            <h1 className="text-2xl font-bold">🎼Musico</h1>
 
             <nav>
             <ul className="menu menu-horizontal space-x-4 bg-base-200 rounded-box">

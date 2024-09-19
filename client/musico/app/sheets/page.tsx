@@ -60,7 +60,7 @@ export default function SheetLibrary() {
 
     return (
         <div className='min-h-screen p-4'>
-            <h1 className="text-3xl font-bold mb-4">Sheets Library</h1>
+            <h1 className="text-5xl font-bold mt-6 mb-6 w-full text-center">Sheets Library</h1>
             <button className="btn mb-2" onClick={() => document.getElementById('my_modal_3')?.showModal()}>+</button>
             <dialog id="my_modal_3" className="modal">
     <div className="modal-box relative">

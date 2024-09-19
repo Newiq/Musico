@@ -8,7 +8,6 @@ export const useTheme = () => useContext(ThemeContext);
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState('lemonade');
 
-
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -16,11 +15,15 @@ export const ThemeProvider = ({ children }) => {
     }
   }, []);
 
-
   const changeTheme = (newTheme) => {
     setTheme(newTheme);
-    localStorage.setItem('theme', newTheme); 
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme); 
   };
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, changeTheme }}>
