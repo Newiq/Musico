@@ -71,7 +71,7 @@ function Metronome() {
   };
 
   return (
-    <div className="metronome flex justify-center items-center">
+    <div className="metronome flex justify-center items-center gap-4">
       <div className="join">
         <button 
           className="btn join-item" 
@@ -90,7 +90,7 @@ function Metronome() {
         </button>
       </div>
 
-      <div className="join mt-4">
+      <div className="join">
         <label className="swap">
         <input type="checkbox" onClick={togglePlay}/>
 

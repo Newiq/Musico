@@ -83,7 +83,7 @@ export default function TunerPage() {
         <h1 className="text-5xl font-bold mt-6 mb-6 w-full text-center">Tuner</h1>
         
         <div className="text-center">
-          <h2 className="text-3xl font-bold mt-6 mb-4">Guitar Tuning</h2>
+          <h2 className="text-3xl font-bold mt-6 mb-4">🎸Guitar Tuning</h2>
           <div className="flex justify-center gap-4">
             {guitarNotes.map((note) => (
               <button
@@ -98,7 +98,7 @@ export default function TunerPage() {
         </div>
 
         <div className="text-center mt-10">
-          <h2 className="text-3xl font-bold mt-6 mb-4">Violin Tuning</h2>
+          <h2 className="text-3xl font-bold mt-6 mb-4">🎻Violin Tuning</h2>
           <div className="flex justify-center gap-4">
             {violinNotes.map((note) => (
               <button
