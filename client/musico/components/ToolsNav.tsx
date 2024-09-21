@@ -9,19 +9,20 @@ interface ToolsNavProps {
 
 function ToolsNav({ sheetId }: ToolsNavProps) {
   const [isScrolling, setIsScrolling] = useState(false);
-  const [scrollSpeed, setScrollSpeed] = useState(30);
+  const [scrollSpeed, setScrollSpeed] = useState(30); 
   const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleAutoScroll = () => {
     if (isScrolling) {
-      stopAutoScroll();
+      stopAutoScroll(); 
     } else {
-      startAutoScroll();
+      startAutoScroll(); 
     }
   };
 
   const startAutoScroll = () => {
     const scrollAmount = 1; 
+    const adjustedSpeed = 101 - scrollSpeed;
     scrollIntervalRef.current = setInterval(() => {
       const currentScroll = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -34,17 +35,19 @@ function ToolsNav({ sheetId }: ToolsNavProps) {
       } else {
         stopAutoScroll(); 
       }
-    }, scrollSpeed);
+    }, adjustedSpeed); 
     setIsScrolling(true);
   };
+
 
   const stopAutoScroll = () => {
     if (scrollIntervalRef.current) {
       clearInterval(scrollIntervalRef.current);
       scrollIntervalRef.current = null;
     }
-    setIsScrolling(false);
+    setIsScrolling(false); 
   };
+
 
   const handleSpeedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSpeed = Number(e.target.value);
@@ -52,7 +55,7 @@ function ToolsNav({ sheetId }: ToolsNavProps) {
 
     if (isScrolling) {
       stopAutoScroll();
-      startAutoScroll();
+      startAutoScroll(); 
     }
   };
 
@@ -69,6 +72,10 @@ function ToolsNav({ sheetId }: ToolsNavProps) {
       }
     }
   };
+
+  useEffect(() => {
+    return () => stopAutoScroll();
+  }, []);
 
   return (
     <div className="drawer max-w-40 mt-5">

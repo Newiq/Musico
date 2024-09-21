@@ -38,40 +38,31 @@ const playTone = (frequency: number) => {
 const playViolinTone = (frequency: number) => {
     const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
   
-    // 创建两个振荡器，叠加不同的波形和频率
+
     const osc1 = audioContext.createOscillator();
     const osc2 = audioContext.createOscillator();
-  
-    // 创建增益节点，用于控制声音包络
     const gainNode = audioContext.createGain();
-    const filter = audioContext.createBiquadFilter(); // 滤波器来柔化音色
-  
-    // 连接节点
+    const filter = audioContext.createBiquadFilter(); 
     osc1.connect(gainNode);
     osc2.connect(gainNode);
     gainNode.connect(filter);
     filter.connect(audioContext.destination);
   
-    // 设置两个振荡器的频率和类型
-    osc1.frequency.value = frequency; // 基本频率
-    osc1.type = 'sawtooth'; // 锯齿波，模拟更复杂的音色
-    osc2.frequency.value = frequency * 2; // 加倍的频率，模拟谐波
-    osc2.type = 'triangle'; // 三角波，增加温暖的音色
+    osc1.frequency.value = frequency;
+    osc1.type = 'sawtooth'; 
+    osc2.frequency.value = frequency * 2; 
+    osc2.type = 'triangle';
   
-    // 包络控制，模拟小提琴的音量变化
     gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-    gainNode.gain.linearRampToValueAtTime(0.8, audioContext.currentTime + 0.1); // 模拟小提琴的渐强音
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 2); // 音量逐渐衰减
-  
-    // 滤波器设置，柔化音色
+    gainNode.gain.linearRampToValueAtTime(0.8, audioContext.currentTime + 0.1);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 2);
     filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(2000, audioContext.currentTime); // 柔化高频音
+    filter.frequency.setValueAtTime(2000, audioContext.currentTime); 
   
-    // 启动振荡器
     osc1.start(audioContext.currentTime);
     osc2.start(audioContext.currentTime);
   
-    // 停止振荡器，持续2秒
+
     osc1.stop(audioContext.currentTime + 2);
     osc2.stop(audioContext.currentTime + 2);
   };

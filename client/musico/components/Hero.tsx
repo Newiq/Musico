@@ -2,10 +2,9 @@ function Hero() {
     return ( <div className="hero bg-base-200 min-h-screen rounded-md m-5">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-              quasi. In deleniti eaque aut repudiandae et a id nisi.
+            <h1 className="text-5xl font-bold ml-2">Login now!</h1>
+            <p className="py-6 ml-2">
+            Musico is a music tool and score management platform that focuses on providing users with a series of practical music tools and score management functions.
             </p>
           </div>
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">

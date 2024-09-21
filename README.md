@@ -1,3 +1,14 @@
+# Set up instructions
+start front-end:
+  - cd client/musico
+  - npm run dev
+start back-end: 
+  - cd server/
+  - nodemon index.js
+
+have .env file (Yes)
+
+
 # Project Title
 Musico
 
@@ -229,4 +240,5 @@ response:
 - Community features for shared annotations.
     -Using open AI to recommend learning resources.
     -Allow users to communicate
-- Integration with external music libraries.
+- Edit music sheets
+  -able to highlight and add annotations to sheets
