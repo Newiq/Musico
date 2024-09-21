@@ -20,42 +20,65 @@ export default function TeoriaIntegration(term: string) {
       '9': 'Ninth chords add a ninth (major second an octave higher) to the seventh chords. They are common in jazz and blues.'
     };
 
-    const chord = teoria.chord(term);
+    const scaleExplanations: { [key: string]: string } = {
+      'major': 'The major scale consists of seven notes and has a happy or bright sound. It follows the pattern: W-W-H-W-W-W-H (W = Whole step, H = Half step).',
+      'minor': 'The minor scale consists of seven notes and has a sad or melancholic sound. It follows the pattern: W-H-W-W-H-W-W.',
+      'dorian': 'The Dorian scale is a minor mode with a raised sixth, creating a jazzy or folk-like sound. It is popular in jazz and rock music.',
+      'phrygian': 'The Phrygian scale is a minor mode with a flat second, often evoking a Spanish or exotic sound.',
+      'lydian': 'The Lydian scale is a major mode with a raised fourth, creating a bright and dreamy sound. It is used often in jazz and film scores.',
+      'mixolydian': 'The Mixolydian scale is a major mode with a flat seventh, often used in blues, rock, and jazz.',
+      'locrian': 'The Locrian scale is a diminished mode with a flat second and fifth, giving it a tense and unstable sound.',
+      'blues': 'The blues scale is a six-note scale commonly used in blues and rock music. It is derived from the minor pentatonic scale with an added blue note.'
+    };
 
-    let chordType = '';
-    if (term.includes('maj7')) {
-      chordType = 'maj7';
-    } else if (term.includes('min7')) {
-      chordType = 'min7';
-    } else if (term.includes('dim7')) {
-      chordType = 'dim7';
-    } else if (term.includes('maj')) {
-      chordType = 'maj';
-    } else if (term.includes('min')) {
-      chordType = 'min';
-    } else if (term.includes('dim')) {
-      chordType = 'dim';
-    } else if (term.includes('aug')) {
-      chordType = 'aug';
-    } else if (term.includes('7')) {
-      chordType = '7';
-    } else if (term.includes('9')) {
-      chordType = '9';
-    } else if (term.includes('11')) {
-      chordType = '11';
-    } else if (term.includes('13')) {
-      chordType = '13';
-    } else if (term.includes('sus')) {
-      chordType = 'sus';
+    const scalesPatterns: { [key: string]: number[] } = {
+      'dorian': [2, 1, 2, 2, 2, 1, 2],
+      'phrygian': [1, 2, 2, 2, 1, 2, 2],
+      'lydian': [2, 2, 2, 1, 2, 2, 1],
+      'mixolydian': [2, 2, 1, 2, 2, 1, 2],
+      'locrian': [1, 2, 2, 1, 2, 2, 2]
+    };
+
+    const applyPatternToRoot = (root: string, pattern: number[]) => {
+      const scale = teoria.note(root).scale('major');
+      const notes = [scale.get(1)];
+
+      let currentStep = teoria.note(root).fq();
+      for (let i = 0; i < pattern.length; i++) {
+        currentStep *= Math.pow(2, pattern[i] / 12); 
+        notes.push(teoria.note.fromFrequency(currentStep));
+      }
+
+      return notes.map((note: any) => note.toString()).join(', ');
+    };
+
+    if (/maj|min|dim|aug|7|sus|11|13|9/.test(term)) {
+      const chord = teoria.chord(term);
+      const notes = chord.notes().map((note: any) => note.toString()).join(', ');
+
+      const chordType = Object.keys(chordExplanations).find(type => term.includes(type)) || 'maj';
+      const explanation = chordExplanations[chordType] || 'No additional explanation for this chord type.';
+
+      result = `The ${chord.name} chord consists of the notes: ${notes}. ${explanation}`;
     } 
 
-    const notes = chord.notes().map((note: any) => note.toString()).join(', ');
-    const explanation = chordExplanations[chordType] || 'No additional explanation for this chord type.';
+    else if (/scale/.test(term)) {
+      const [note, scaleType] = term.split(' ');
 
-    result = `The ${chord.name} chord consists of the notes: ${notes}. ${explanation}`;
+      if (scalesPatterns[scaleType]) {
+        const scale = teoria.scale(note, scaleType);
+        const notes = scale.notes().map((note: any) => note.toString()).join(', ');
+        const explanation = scaleExplanations[scaleType] || 'No additional explanation for this scale type.';
+        result = `The ${note} ${scaleType} scale consists of the notes: ${notes}. ${explanation}`;
+      }
+    } 
+    else {
+      result = 'Invalid term. Please enter a valid chord or scale.';
+    }
 
     return result;
   } catch (error) {
+    console.error('Error processing the term:', error);
     return 'There was an error processing the term. Please try again.';
   }
 }
