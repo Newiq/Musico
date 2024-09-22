@@ -71,19 +71,19 @@ export default function SheetLibrary() {
     return (
         <div className="min-h-screen p-4">
         <h1 className="text-5xl font-bold mt-6 mb-6 w-full text-center">Sheets Library</h1>
-        <button className="btn mb-2" onClick={() => document.getElementById('my_modal_3')?.showModal()}>+</button>
-        <dialog id="my_modal_3" className="modal">
-            <div className="modal-box relative">
-            <form method="dialog" onSubmit={handleUpload}>
-                <button
-                type="button"
-                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-                onClick={() => document.getElementById('my_modal_3')?.close()}
-                >✕</button>
+        <button className="btn mb-2" onClick={() => (document.getElementById('my_modal_3') as HTMLDialogElement)?.showModal()}>+</button>
+<dialog id="my_modal_3" className="modal">
+    <div className="modal-box relative">
+        <form method="dialog" onSubmit={handleUpload}>
+            <button
+            type="button"
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            onClick={() => (document.getElementById('my_modal_3') as HTMLDialogElement)?.close()}
+            >✕</button>
 
-                <h2 className="text-lg font-bold text-center mb-4">Upload Sheets</h2>
+            <h2 className="text-lg font-bold text-center mb-4">Upload Sheets</h2>
 
-                <div className="form-control w-full mb-4">
+            <div className="form-control w-full mb-4">
                 <label className="label">
                     <span className="label-text">Title:</span>
                 </label>
@@ -95,9 +95,9 @@ export default function SheetLibrary() {
                     required
                     className="input input-bordered w-full"
                 />
-                </div>
+            </div>
 
-                <div className="form-control w-full mb-4">
+            <div className="form-control w-full mb-4">
                 <label className="label">
                     <span className="label-text">Upload file:</span>
                 </label>
@@ -108,16 +108,16 @@ export default function SheetLibrary() {
                     onChange={handleFileChange}
                     required
                 />
-                </div>
-
-                <div className="divider">🎧</div>
-
-                <div className="flex justify-center">
-                <button type="submit" className="btn btn-primary w-full">Upload Sheet</button>
-                </div>
-            </form>
             </div>
-        </dialog>
+
+            <div className="divider">🎧</div>
+
+            <div className="flex justify-center">
+                <button type="submit" className="btn btn-primary w-full">Upload Sheet</button>
+            </div>
+        </form>
+    </div>
+</dialog>
 
         {loading ? (
             <p>Loading sheets...</p>
