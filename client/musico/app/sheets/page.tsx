@@ -22,13 +22,20 @@ export default function SheetLibrary() {
 
     useEffect(() => {
         const fetchSheets = async () => {
-        try {
-            const response = await fetchSheetsList();
-            setSheets(response.data.data);
-            setLoading(false);
-        } catch (error) {
-            console.error('Failed to fetch sheets', error);
-        }
+            try {
+                const response = await fetchSheetsList();
+                if (response.data && Array.isArray(response.data.data)) {
+                    setSheets(response.data.data);
+                } else {
+                    console.warn("Unexpected response format", response.data);
+                    setSheets([]);
+                }
+                setLoading(false);
+            } catch (error) {
+                console.error('Failed to fetch sheets', error);
+                setLoading(false); 
+                setSheets([]);
+            }
         };
         fetchSheets();
     }, []);
