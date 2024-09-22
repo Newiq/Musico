@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: {
-        serverComponents: true,
+        // serverComponents: true,
         // any other experimental features you might want to use
     }
 };

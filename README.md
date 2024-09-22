@@ -28,7 +28,7 @@ Musicians face significant challenges in managing and annotating their sheet mus
 
 ### Features
 
-- Music Reader: Users can upload and store sheet music. Features include marking the sheet music with musical notation or using a highlighter, eraser, and undo functions. The reader also supports automatic scrolling and a metronome that can be played at various speeds.
+- Music Reader: Users can upload and store sheet music. The reader also supports automatic scrolling and a metronome that can be played at various speeds.
 - Music Tools:
     - Tuner: Plays the open string sound of a violin or guitar for tuning.
     - Metronome: Allows input of a beat that is played at a set frequency.
@@ -40,33 +40,32 @@ Musicians face significant challenges in managing and annotating their sheet mus
 
 - React
 - TypeScript
-- MySQL
+- MongoDB
 - Express
 - Client libraries: 
     - react
     - react-router
     - axios
     - pdfjs-dist
-    - fabric.js
 - Server libraries:
     - knex
     - express
 
 ### APIs
 
-- Custom APIs for managing user data, sheet music files, and annotations.
-- Music theory API integration to fetch real-time data on music terms and chords.
+- Custom APIs for managing sheet music files.
 
 ### Sitemap
 
 - Home Page
 - Sheet Music Library
-    -edit music scores
+    -can view and delete single music sheet
     -With auto-scroll function and built-in metronome
 - Music Toolset
     -metronome
     -tuner(fake tuner, just can play sounds, cannot take inputs.)
 - Music Dictionary
+    -user can search chords and scales in the dictionary.
 
 ### Mockups
 
@@ -99,58 +98,53 @@ Musicians face significant challenges in managing and annotating their sheet mus
 
 ### Endpoints
 
-**GET /sheets**
+**GET /get-files**
 - Fetch all sheet music.
 response:
 {
   "sheets": [
     {
-      "id": 1,
-      "title": "Beethoven Symphony No.9",
-      "composer": "Ludwig van Beethoven",
-      "uploadedAt": "2024-01-01"
+      "_id": "66e60391d8b9af072f66b8df",
+      "pdf": "1726350225736Canon_in_D_-_4_Hands.pdf",
+      "title": "Canon",
+      "__v": 0
     },
     {
-      "id": 2,
-      "title": "Chopin Nocturne Op.9 No.2",
-      "composer": "Frédéric Chopin",
-      "uploadedAt": "2024-01-02"
+      "_id": "66e60642d8b9af072f66b8f4",
+      "pdf": "1726350914879Chopin_-_Nocturne_Op_9_No_2_E_Flat_Major.pdf",
+      "title": "Nocturne",
+      "__v": 0
     }
   ]
 }
 
-**POST /sheets**
+**GET /get-files/id**
+- Fetch all sheet music.
+response:
+{
+  "status": "ok",
+  "data": {
+    "_id": "66e60391d8b9af072f66b8df",
+    "pdf": "1726350225736Canon_in_D_-_4_Hands.pdf",
+    "title": "Canon",
+    "__v": 0
+  }
+}
+
+**POST /post-file**
 - Upload new sheet music.
 
 parameters：
 - title (string): Title of the sheet music.
-- composer (string): Composer's name.
 - file (file): The sheet music file.
 
 response:
 {
   "success": true,
-  "id": 3,
+  "_id": "66e60642d8b9af072f66b8f4",
   "message": "Sheet music uploaded successfully."
 }
 
-**PUT /sheets/{id}**
-- Update existing sheet music.
-
-parameters：
-- id (path variable): ID of the sheet music to update.
-- title (string, optional): New title of the sheet music.
-- composer (string, optional): New composer's name.
-- file (file, optional): New sheet music file.
-- title (string): Title of the sheet music.
-- composer (string): Composer's name.
-- file (file): The sheet music file.
-response:
-{
-  "success": true,
-  "id": 3,
-  "message": "Sheet music uploaded successfully."
-}
 **DELETE /sheets/{id}**
 - Remove sheet music.
 
@@ -163,24 +157,6 @@ response:
   "message": "Sheet music deleted successfully."
 }
 
-**GET /dictionary**
-- term (string, optional): A search term to filter music theory terms.
-
-parameters：
-- id (path variable): ID of the sheet music to delete.
-response:
-{
-  "terms": [
-    {
-      "term": "Chord",
-      "definition": "A combination of notes sounded together."
-    },
-    {
-      "term": "Scale",
-      "definition": "A series of notes ordered by ascending or descending pitch."
-    }
-  ]
-}
 
 
 ## Roadmap
@@ -191,14 +167,12 @@ response:
 - Create Server
     - Initialize an Express project with basic routing. 
 
-- Create Database Migrations
-    - Define database schema and create migrations for PostgreSQL to set up tables for sheet music, annotations, and music dictionary terms.
+- Create Database 
+    - Define database schema and create migrations for MongoDB to set up tables for sheet music.
 
 - Gather Sample Music Data
-    -Collect 15 sample sheet music files in two different music genres or styles.
+    -Collect 5 sample sheet music files in two different music genres or styles.
 
-- Create Seed Data
-    -Develop seed scripts to populate the database with initial music data and dictionary entries.
 
 - Deploy Client and Server
     -Set up deployment processes using a platform like Vercel for the client and Heroku for the server to reflect all commits in production.
@@ -210,13 +184,8 @@ response:
 
 - Feature: View Sheet Music
     - Create a detailed view page for individual sheet music files.
-    - Allow users to view and interact with music sheets using Fabric.js for annotations.
+    - Allow users to view and interact with music sheets.
     - Set up a GET /sheets/{id} endpoint to fetch specific sheet music details.
-
-- Feature: Annotate Sheet Music
-    - Add functionalities to annotate sheet music with symbols, highlighters, and text notes.
-    - Implement saving and retrieving annotation data.
-    - Develop POST and PUT endpoints for creating and updating annotations.
 
 - Feature: Music Dictionary
     - Develop a feature for users to search and view music theory terms from the music dictionary.
@@ -235,6 +204,7 @@ response:
 ## Nice-to-haves
 - User register and log in.
     - using JWT auth
+- Pagenation for sheets library.
 - Advanced audio analysis tools.
     - implement the real tuning tool
 - Community features for shared annotations.
