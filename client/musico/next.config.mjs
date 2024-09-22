@@ -3,7 +3,8 @@ const nextConfig = {
     experimental: {
         // serverComponents: true,
         // any other experimental features you might want to use
-    }
+    },
+    output: 'export', 
 };
 
 export default nextConfig;
