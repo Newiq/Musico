@@ -10,7 +10,7 @@
     "start": "npm install --prefix server && npm start --prefix server"
   },
   "engines": {
-    "node": "14.x"
+    "node": "18.x" 
   },
   "keywords": [],
   "author": "",
