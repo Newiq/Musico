@@ -34,8 +34,12 @@ export default function SheetLibrary() {
     }, []);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-        setFile(e.target.files[0]);
+        const { files } = e.target;
+        if (files && files.length > 0) {
+            setFile(files[0]); 
+        } else {
+            console.warn("No files selected.");
+            setFile(null);
         }
     };
 
