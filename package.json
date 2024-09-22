@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "npm install --prefix client/musico && npm install --prefix server",
     "heroku-postbuild": "npm install --prefix client/musico && npm run build --prefix client/musico",
-    "start": "npm install --prefix server && npm start --prefix server"
+    "start": "npm run start-server & npm run start-frontend",
+    "start-server": "node server/index.js",  
+    "start-frontend": "npm run start --prefix client/musico"
   },
   "engines": {
     "node": "18.x" 
