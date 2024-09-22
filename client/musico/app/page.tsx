@@ -1,5 +1,5 @@
 'use client'
-import Hero from '@/components/Hero';
+import Hero from '../components/Hero'
 import { useTheme } from '../app/ThemeContext';
 export default function Home() {
   const { theme } = useTheme(); 

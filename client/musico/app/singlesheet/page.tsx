@@ -4,7 +4,7 @@
     import { Sheet } from '../interfaces/sheets';
     import PdfComp from '../PdfComp';
     import { pdfjs } from 'react-pdf';
-    import ToolsNav from '@/components/ToolsNav';
+    import ToolsNav from '../../components/ToolsNav';
 
     pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 

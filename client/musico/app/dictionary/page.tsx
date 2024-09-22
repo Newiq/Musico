@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import TeoriaIntegration from '../../components/TeoriaIntegration';
-import DictionaryNav from '@/components/DictionaryNav';
+import DictionaryNav from '../../components/DictionaryNav';
 
 export default function Home() {
   const [term, setTerm] = useState('');
