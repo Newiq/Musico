@@ -4,17 +4,14 @@
   "description": "Musico fullstack app: front-end in client/musico and back-end in server.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "install": "npm install --prefix client/musico && npm install --prefix server",
-    "heroku-postbuild": "npm install --prefix client/musico && npm run build --prefix client/musico",
-    "start": "npm run start-server & npm run start-frontend",
-    "start-server": "node server/index.js",  
-    "start-frontend": "npm run start --prefix client/musico"
+    "heroku-postbuild": "npm run build --prefix client/musico",
+    "start": "node server/index.js"
   },
   "engines": {
-    "node": "18.x" 
+    "node": "18.x"
   },
   "keywords": [],
-  "author": "",
+  "author": "Wendy",
   "license": "ISC"
 }
