@@ -39,18 +39,18 @@ export default function TeoriaIntegration(term: string): string {
       'locrian': [1, 2, 2, 1, 2, 2, 2]
     };
 
-    const applyPatternToRoot = (root: string, pattern: number[]) => {
-      const scale = teoria.note(root).scale('major');
-      const notes = [scale.get(1)];
+    // const applyPatternToRoot = (root: string, pattern: number[]) => {
+    //   const scale = teoria.note(root).scale('major');
+    //   const notes = [scale.get(1)];
 
-      let currentStep = teoria.note(root).fq();
-      for (let i = 0; i < pattern.length; i++) {
-        currentStep *= Math.pow(2, pattern[i] / 12); 
-        notes.push(teoria.note.fromFrequency(currentStep));
-      }
+    //   let currentStep = teoria.note(root).fq();
+    //   for (let i = 0; i < pattern.length; i++) {
+    //     currentStep *= Math.pow(2, pattern[i] / 12); 
+    //     notes.push(teoria.note.fromFrequency(currentStep));
+    //   }
 
-      return notes.map((note: any) => note.toString()).join(', ');
-    };
+    //   return notes.map((note: any) => note.toString()).join(', ');
+    // };
 
     if (/maj|min|dim|aug|7|sus|11|13|9/.test(term)) {
       const chord = teoria.chord(term);
