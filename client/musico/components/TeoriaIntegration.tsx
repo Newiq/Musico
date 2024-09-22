@@ -1,8 +1,8 @@
 import teoria from 'teoria';
 
-export default function TeoriaIntegration(term: string) {
+export default function TeoriaIntegration(term: string): string {
   try {
-    let result: string;
+    let result = '';
 
     const chordExplanations: { [key: string]: string } = {
       'maj': 'Major chords are often described as happy or bright chords. They are built with the root note, a major third, and a perfect fifth.',
