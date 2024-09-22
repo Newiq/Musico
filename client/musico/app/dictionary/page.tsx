@@ -1,11 +1,11 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import TeoriaIntegration from '../../components/TeoriaIntegration';
 import DictionaryNav from '../../components/DictionaryNav';
 
 export default function Home() {
-  const [term, setTerm] = useState('');
-  const [result, setResult] = useState(null);
+  const [term, setTerm] = useState(''); 
+  const [result, setResult] = useState<string | null>(null); 
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,23 +29,23 @@ export default function Home() {
             onSubmit={handleSearch}
             className="w-full max-w-lg mb-8 flex justify-center space-x-4"
           >
-        
             <div className="join  w-full flex">
-                <div className='flex-1 justify-center'>
-                    <div>
-                    <input placeholder="Enter music term (e.g., Cmaj7, minor scale)"
+              <div className='flex-1 justify-center'>
+                <div>
+                  <input 
+                    placeholder="Enter music term (e.g., Cmaj7, minor scale)"
                     value={term}
                     onChange={(e) => setTerm(e.target.value)}
                     className="input input-bordered join-item input-secondary w-full max-w-2xl"
-                    required />
-                    </div>
+                    required 
+                  />
                 </div>
-                
-                <div className="indicator">
-                    <span className="indicator-item badge badge-secondary">new</span>
-                    <button className="btn btn-primary join-item" type="submit">Search</button>
-                </div>
-                </div>
+              </div>
+              <div className="indicator">
+                <span className="indicator-item badge badge-secondary">new</span>
+                <button className="btn btn-primary join-item" type="submit">Search</button>
+              </div>
+            </div>
           </form>
 
           {result && (
