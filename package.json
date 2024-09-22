@@ -1,0 +1,18 @@
+{
+  "name": "capstone-musico",
+  "version": "1.0.0",
+  "description": "Musico fullstack app: front-end in client/musico and back-end in server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npm install --prefix client/musico && npm install --prefix server",
+    "heroku-postbuild": "npm install --prefix client/musico && npm run build --prefix client/musico",
+    "start": "npm install --prefix server && npm start --prefix server"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
