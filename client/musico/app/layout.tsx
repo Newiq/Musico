@@ -2,9 +2,9 @@ import { ThemeProvider} from './ThemeContext';
 import { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import Container from '@/components/Container';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import Container from '../components/Container';
 import { useTheme } from './ThemeContext';
 
 const geistSans = localFont({
