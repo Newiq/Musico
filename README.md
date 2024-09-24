@@ -2,9 +2,10 @@
 start front-end:
   - cd client/musico
   - npm run dev
+
 start back-end: 
   - cd server/
-  - nodemon index.js
+  - node index.js
 
 have .env file (Yes)
 
@@ -14,7 +15,7 @@ Musico
 
 ## Overview
 
-Musico is an interactive platform designed for musicians to access, annotate, and learn music more effectively.
+Musico is an interactive platform designed for musicians to manage music sheets, use music tools and learn music more effectively.
 
 ### Problem
 
@@ -28,11 +29,11 @@ Musicians face significant challenges in managing and annotating their sheet mus
 
 ### Features
 
-- Music Reader: Users can upload and store sheet music. The reader also supports automatic scrolling and a metronome that can be played at various speeds.
+- Music Sheets Reader: Users can upload, store and delete sheet music in music library. The reader also supports automatic scrolling and a metronome that can be played at various speeds.
 - Music Tools:
     - Tuner: Plays the open string sound of a violin or guitar for tuning.
     - Metronome: Allows input of a beat that is played at a set frequency.
-- Music Dictionary: Gets and displays information about chords and other musical terms, supports search and fuzzy search functions.
+- Music Dictionary: Gets and displays information about chords and other musical terms,including chords and scales.
 
 ## Implementation
 
