@@ -11,34 +11,47 @@ export default function SheetLibrary() {
         _id: string;
         title: string;
         pdf: string;
+        userId: string;
     }
 
     const [sheets, setSheets] = useState<Sheet[]>([]);
     const [loading, setLoading] = useState(true);
     const [title, setTitle] = useState('');
     const [file, setFile] = useState<File | null>(null);
-    const [showSuccess, setShowSuccess] = useState(false); 
+    const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
+    const [user, setUser] = useState<any>(null);
+    const [error, setError] = useState('');
 
     useEffect(() => {
-        const fetchSheets = async () => {
-            try {
-                const response = await fetchSheetsList();
-                if (response.data && Array.isArray(response.data.data)) {
-                    setSheets(response.data.data);
-                } else {
-                    console.warn("Unexpected response format", response.data);
-                    setSheets([]);
-                }
-                setLoading(false);
-            } catch (error) {
-                console.error('Failed to fetch sheets', error);
-                setLoading(false); 
+        const userStr = localStorage.getItem('user');
+        if (userStr) {
+            const userData = JSON.parse(userStr);
+            setUser(userData);
+            fetchUserSheets();
+        }
+    }, []);
+
+    const fetchUserSheets = async () => {
+        const userStr = localStorage.getItem('user');
+        if (!userStr) return;
+        
+        const userData = JSON.parse(userStr);
+        try {
+            const response = await fetchSheetsList(userData.id);
+            if (response.data && Array.isArray(response.data.data)) {
+                setSheets(response.data.data);
+            } else {
+                console.warn("Unexpected response format", response.data);
                 setSheets([]);
             }
-        };
-        fetchSheets();
-    }, []);
+            setLoading(false);
+        } catch (error) {
+            console.error('Failed to fetch sheets', error);
+            setLoading(false);
+            setSheets([]);
+        }
+    };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
@@ -56,28 +69,54 @@ export default function SheetLibrary() {
 
     const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (file && title) {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('title', title);
-
-        try {
-            const response = await uploadSheet(formData);
-            const updatedResponse = await fetchSheetsList();
-            setSheets(updatedResponse.data.data);
-            setShowSuccess(true); 
-            
-            setTimeout(() => {
-                window.location.replace('/sheets');
-            }, 1000);
-        } catch (error) {
-            console.error('Error uploading file:', error);
-            setShowError(true);
+        if (!user) {
+            setError('Please login first');
+            return;
         }
+        if (file && title) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('title', title);
+            formData.append('userId', user.id);
+
+            try {
+                const response = await uploadSheet(formData);
+                await fetchUserSheets();
+                setShowSuccess(true);
+                
+                setTimeout(() => {
+                    window.location.replace('/sheets');
+                }, 1000);
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                setShowError(true);
+            }
         } else {
-        alert('Please provide a title and choose a file.');
+            alert('Please provide a title and choose a file.');
         }
     };
+
+    if (!user) {
+        return (
+            <div className="min-h-screen p-4 flex flex-col items-center justify-center">
+                <div className="text-center max-w-2xl">
+                    <h1 className="text-4xl font-bold mb-4">Welcome to Sheet Library</h1>
+                    <p className="mb-8 text-lg">
+                        Create an account or log in to access your personal sheet music collection. 
+                        Store, organize, and access your music sheets anytime, anywhere.
+                    </p>
+                    <div className="flex gap-4 justify-center">
+                        <Link href="/" className="btn btn-primary">
+                            Login
+                        </Link>
+                        <Link href="/" className="btn btn-outline">
+                            Create Account
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen p-4">
@@ -155,6 +194,11 @@ export default function SheetLibrary() {
 
         {showSuccess && <Success onClose={() => setShowSuccess(false)} />}
         {showError && <Error onClose={()=>setShowError(false)}/>}
+        {error && (
+            <div className="alert alert-error">
+                <span>{error}</span>
+            </div>
+        )}
         </div>
     );
 }

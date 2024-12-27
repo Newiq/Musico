@@ -1,116 +1,83 @@
-    'use client'
-    import { useTheme } from '../app/ThemeContext';
-    import Link from 'next/link';
+'use client'
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import ThemeToggle from './ThemeToggle';
 
-    const Header = () => {
-    const { theme, changeTheme } = useTheme();
+export default function Header() {
+  const [user, setUser] = useState<any>(null);
 
-    return (
-        <header className={"p-4 mt-2"} data-theme={theme}>
-        <div className="container mx-auto flex justify-between items-center">
-            <h1 className="text-2xl font-bold">🎼Musico</h1>
+  useEffect(() => {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      setUser(JSON.parse(userStr));
+    }
+  }, []);
 
-            <nav>
-            <ul className="menu menu-horizontal space-x-4 bg-base-200 rounded-box">
-                <li className="tooltip" data-tip="Home">
-                <Link href="/">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                        />
-                    </svg>
-                </Link>
-                </li>
-                <li className="tooltip" data-tip="Sheet Library">
-                <Link href="/sheets">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M7 2h10a2 2 0 012 2v16a2 2 0 01-2 2H7a2 2 0 01-2-2V4a2 2 0 012-2zm0 2v16h10V4H7zm2 4h6m-6 4h6m-6 4h6"
-                        />
-                    </svg>
-                </Link>
-                </li>
-                <li className="tooltip" data-tip="Music Tools">
-                <Link href="/tools">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path d="M12 3v10.55A4 4 0 1014 17V7h4V3h-6z" />
-                    </svg>
-                </Link>
-                </li>
-                <li className="tooltip" data-tip="Music Dictionary">
-                <Link href="/dictionary">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 4v16m8-16v16m0-16a2 2 0 00-2-2H6a2 2 0 00-2 2v16m16 0H6"
-                        />
-                    </svg>
-                </Link>
-                </li>
-            </ul>
-            </nav>
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
 
-            <details className="dropdown dropdown-end">
-            <summary className="btn">
-                Choose Theme
-                <svg
-                width="12px"
-                height="12px"
-                className="inline-block h-2 w-2 ml-2 fill-current opacity-60"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 2048 2048"
-                >
-                <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
-                </svg>
-            </summary>
-            <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                <li>
-                <a onClick={() => changeTheme('lemonade')}>🍋 Lemonade</a>
-                </li>
-                <li>
-                <a onClick={() => changeTheme('emerald')}>🥤 Milkshake</a>
-                </li>
-                <li>
-                <a onClick={() => changeTheme('cupcake')}>🍰 Cupcake</a>
-                </li>
-            </ul>
-            </details>
+  return (
+    <div className="navbar bg-base-100">
+      <div className="navbar-start">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+          </div>
+          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <li><Link href="/sheets">Sheet Library</Link></li>
+            <li>
+              <a>Tools</a>
+              <ul className="p-2">
+                <li><Link href="/tools/tuner">Tuner</Link></li>
+                <li><Link href="/tools/metronome">Metronome</Link></li>
+              </ul>
+            </li>
+            <li><Link href="/dictionary">Dictionary</Link></li>
+          </ul>
         </div>
-        </header>
-    );
-    };
-
-    export default Header;
+        <Link href="/" className="btn btn-ghost text-xl">Musico</Link>
+      </div>
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          <li><Link href="/sheets">Sheet Library</Link></li>
+          <li>
+            <details>
+              <summary>Tools</summary>
+              <ul className="p-2">
+                <li><Link href="/tools/tuner">Tuner</Link></li>
+                <li><Link href="/tools/metronome">Metronome</Link></li>
+              </ul>
+            </details>
+          </li>
+          <li><Link href="/dictionary">Dictionary</Link></li>
+        </ul>
+      </div>
+      <div className="navbar-end gap-2">
+        <div className="form-control">
+          <ThemeToggle />
+        </div>
+        <div className="dropdown dropdown-end">
+          {user ? (
+            <>
+              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img alt="User avatar" src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}`} />
+                </div>
+              </div>
+              <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                <li><span>{user.name}</span></li>
+                <li><button onClick={handleLogout}>Logout</button></li>
+              </ul>
+            </>
+          ) : (
+            <Link href="/" className="btn btn-ghost">Login</Link>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
         
