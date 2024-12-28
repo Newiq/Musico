@@ -38,7 +38,7 @@ export default function Header() {
             <li><Link href="/dictionary">Dictionary</Link></li>
           </ul>
         </div>
-        <Link href="/" className="btn btn-ghost text-xl">Musico</Link>
+        <Link href="/" className="btn btn-ghost text-xl">🎼Musico</Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">

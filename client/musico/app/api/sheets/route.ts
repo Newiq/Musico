@@ -65,4 +65,16 @@ export async function POST(request: Request) {
   } catch (error) {
     return Response.json({ error: 'Failed to upload sheet' }, { status: 500 });
   }
+}
+
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+    try {
+        const { db } = await connectToDatabase();
+        const result = await db.collection('sheets').deleteOne({ 
+            _id: new ObjectId(params.id) 
+        });
+        return Response.json({ success: true });
+    } catch (error) {
+        return Response.json({ error: 'Failed to delete sheet' }, { status: 500 });
+    }
 } 

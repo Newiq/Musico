@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { fetchSheetsList } from '../app/utils/api';
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -14,13 +15,30 @@ export default function Hero() {
   const [success, setSuccess] = useState('');
   const [showPasswordHints, setShowPasswordHints] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [sheetCount, setSheetCount] = useState(0);
 
   useEffect(() => {
     const userStr = localStorage.getItem('user');
     if (userStr) {
-      setUser(JSON.parse(userStr));
+      const userData = JSON.parse(userStr);
+      setUser(userData);
     }
   }, []);
+
+  useEffect(() => {
+    const fetchSheetCount = async () => {
+      if (!user) return;
+      try {
+        const response = await fetchSheetsList(user.id);
+        if (response.data && Array.isArray(response.data.data)) {
+          setSheetCount(response.data.data.length);
+        }
+      } catch (error) {
+        console.error('Failed to fetch sheet count:', error);
+      }
+    };
+    fetchSheetCount();
+  }, [user]);
 
   const validatePassword = (pass: string) => {
     return PASSWORD_REGEX.test(pass);
@@ -149,8 +167,10 @@ export default function Hero() {
                   </svg>
                 </div>
                 <div className="stat-title">Your Sheets</div>
-                <div className="stat-value text-primary">0</div>
-                <div className="stat-desc">Start adding your sheets</div>
+                <div className="stat-value text-primary">{sheetCount}</div>
+                <div className="stat-desc">
+                    {sheetCount === 0 ? 'Start adding your sheets' : `${sheetCount} sheet${sheetCount === 1 ? '' : 's'} in your library`}
+                </div>
               </div>
               
               <div className="stat">
